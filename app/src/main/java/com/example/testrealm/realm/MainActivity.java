@@ -8,6 +8,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.testrealm.R;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,14 +25,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         getPagerView();
-        readFileFromAssets();
     }
 
     private void getPagerView() {
 
         viewPager = findViewById(R.id.viewKlass);
-        adapter = new ViewPagerAdapter();
+        List<Question> list = readFileFromAssets();
+        adapter = new ViewPagerAdapter(list);
         viewPager.setAdapter(adapter);
         viewPager.setPadding(130, 0, 130, 0);
 
@@ -57,10 +62,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void readFileFromAssets() {
-
+    private List<Question> readFileFromAssets() {
         String json = ResourceManager.readFileFromAssets(getApplicationContext(), SAMPLES);
-        Model homeModels = new Gson().fromJson(json, Model.class);
-        adapter.notify(homeModels.getTitle());
+        Type type = new TypeToken<List<Question>>(){}.getType();
+        return new Gson().fromJson(json, type);
     }
 }

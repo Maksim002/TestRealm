@@ -3,6 +3,7 @@ package com.example.testrealm.realm;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,15 +17,17 @@ import java.util.List;
 public class ViewPagerAdapter extends PagerAdapter {
 
     private RecyclerView recyclerView;
-    private List<Question> list;
+    private TextView textView;
 
-    public ViewPagerAdapter() {
-        this.list = new ArrayList<>();
+    private List<Question> questions;
+
+    public ViewPagerAdapter(List<Question> questions) {
+        this.questions = questions;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return questions.size();
     }
 
     @Override
@@ -42,7 +45,9 @@ public class ViewPagerAdapter extends PagerAdapter {
         RecyclerViewAdapter adapter =  new RecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
 
+        textView = view.findViewById(R.id.textViewTitle);
 
+        textView.setText(questions.get(position).getTitle());
 
         container.addView(view, 0);
         return view;
@@ -53,10 +58,4 @@ public class ViewPagerAdapter extends PagerAdapter {
         container.removeView((View)object);
 
     }
-
-    public void notify(List<Question> list) {
-        this.list = list;
-        notifyDataSetChanged();
-    }
-
 }

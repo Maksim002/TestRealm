@@ -14,10 +14,10 @@ import java.util.List;
 
 public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewHolder> {
 
-    private List<Answer> models;
+    private List<Answer> answers;
 
     public RecyclerViewAdapter() {
-        this.models = new ArrayList<>();
+        this.answers = new ArrayList<>();
     }
 
     @NonNull
@@ -30,16 +30,16 @@ public class RecyclerViewAdapter  extends RecyclerView.Adapter<RecyclerViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        holder.bind(models.get(position));
+        holder.bind(answers.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return models.size();
+        return answers.size();
     }
 
-    public void notify(List<Product> list) {
-        this.models = models;
+    public void notify(List<Answer> answers) {
+        this.answers = answers;
         notifyDataSetChanged();
     }
 }
