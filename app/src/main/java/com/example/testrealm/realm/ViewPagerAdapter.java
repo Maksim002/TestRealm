@@ -1,13 +1,11 @@
 package com.example.testrealm.realm;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.testrealm.R;
@@ -15,18 +13,23 @@ import com.example.testrealm.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adaptor extends PagerAdapter {
+public class ViewPagerAdapter extends PagerAdapter {
 
-    private List<Product> question;
+    private RecyclerView recyclerView;
+    private List<Question> list;
+
+    public ViewPagerAdapter() {
+        this.list = new ArrayList<>();
+    }
 
     @Override
     public int getCount() {
-        return question.size();
+        return list.size();
     }
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view.equals(object);
+        return false;
     }
 
     @NonNull
@@ -35,11 +38,11 @@ public class Adaptor extends PagerAdapter {
         LayoutInflater layoutInflater = LayoutInflater.from(container.getContext());
         View view = layoutInflater.inflate(R.layout.item, container,false);
 
-        TextView title;
+        recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerViewAdapter adapter =  new RecyclerViewAdapter();
+        recyclerView.setAdapter(adapter);
 
-        title = view.findViewById(R.id.text01);
 
-        title.setText(question.get(position).getQuestion());
 
         container.addView(view, 0);
         return view;
@@ -51,8 +54,9 @@ public class Adaptor extends PagerAdapter {
 
     }
 
-    public void notify(List<Product> questionnaires) {
-        this.question = questionnaires;
+    public void notify(List<Question> list) {
+        this.list = list;
         notifyDataSetChanged();
     }
+
 }
